@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="920,650" roundcorner="1,0,0,0" caption="0,0,0,35">
+
+  <!-- 字体定义 -->
+  <Font id = "0" name="宋体" size="14" bold="false" italic="false" />
+  <Font id = "1" name="宋体" size="12" bold="false" italic="false" />
+
+  <VerticalLayout bkcolor="#FFFBFCFC">
+    <!-- 标题区域 -->
+    <HorizontalLayout height="35" bkcolor="#FFEFF5F8">
+      <HorizontalLayout>
+        <Container width="25" height="25" bkimage="file='xiaobanma.png' source='0,0,436,435' dest='8,8,30,30' " /> 
+        <Text text="小斑马网吧优化大师 1.0 Beta" pos="27,10,200,23" float="true" textcolor="#FF000000" font="1" />
+      </HorizontalLayout>
+      <HorizontalLayout width="50" inset="0,1,0,0">
+        <!--<Button name="aboutbtn" tooltip="关于" float="true" pos="0,5,19,24" width="21"
+                normalimage=" file='btn_menu.png' source='0,0,19,19'"
+                hotimage=" file='btn_menu.png' source='19,0,38,19'"
+                pushedimage=" file='btn_menu.png' source='38,0,57,19'"/>-->
+        <Button name="closebtn" tooltip="关闭" float="true" pos="0,0,50,35" width="50"
+                normalimage=" file='btn_close.png' source='0,0,50,35'"
+                hotimage=" file='btn_close.png' source='50,0,100,35'"
+                pushedimage=" file='btn_close.png' source='100,0,150,35'"/>
+      </HorizontalLayout>
+    </HorizontalLayout>
+
+    <HorizontalLayout>
+      <VerticalLayout width="580" bkcolor="#FFFBFCFC">
+      </VerticalLayout>
+      <VerticalLayout bkcolor="#FFF7F8F8">
+      </VerticalLayout>
+    </HorizontalLayout>
+
+    <!-- 状态栏 -->
+    <HorizontalLayout height="37" bkcolor="#FF2B3E51">
+      
+      <HorizontalLayout width="225" bkcolor="#FFF08335">
+        <Container width="36" height="29" bkimage="file='icons.png' source='42,0,63,21' dest='16,8,36,29' " />
+        <Text text="运行环境：绿化大师无盘" pos="45,11,210,26" float="true" textcolor="#FFFFFFFF" font="0" />
+      </HorizontalLayout>
+      
+      <HorizontalLayout width="115" bkcolor="#FF3D556D">
+        <Container width="36" height="28" bkimage="file='user.png' source='0,0,21,21' dest='15,7,36,28' " />
+        <Text text="超级用户" pos="45,12,100,26" float="true" textcolor="#FFFFFFFF" font="1" />
+      </HorizontalLayout>
+      
+      <HorizontalLayout float="true" pos="695,0,920,37" bkcolor="#FF2D97DE">
+      </HorizontalLayout>
+      
+    </HorizontalLayout>
+    
+  </VerticalLayout>
+</Window>
