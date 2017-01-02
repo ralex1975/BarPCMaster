@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Window size="920,650" roundcorner="1,0,0,0" caption="0,0,0,35">
-
   <!-- 字体定义 -->
   <Font id = "0" name="宋体" size="14" bold="false" italic="false" />
   <Font id = "1" name="宋体" size="12" bold="false" italic="false" />
+  <Font id = "2" name="宋体" size="14" bold="true" italic="false" />
 
   <VerticalLayout bkcolor="#FFFBFCFC">
     <!-- 标题区域 -->
@@ -25,10 +25,16 @@
     </HorizontalLayout>
 
     <HorizontalLayout>
-      <VerticalLayout width="580" bkcolor="#FFFBFCFC">
+      
+      <VerticalLayout width="580" bkcolor="#FFFBFCFC" inset="20,20,20,20">
+        <ProblemList name="ProblemList" itemminwidth="540" itemalign="center" vscrollbar="true" itembkcolor="#FFFBFCFC" 
+                     itemdisabledbkcolor="#FFD5D1CC" itemhotbkcolor="#FFEAF4FC" itemselectedbkcolor="#FFE7E9E9" menu="true" >
+        </ProblemList>
       </VerticalLayout>
+      
       <VerticalLayout bkcolor="#FFF7F8F8">
       </VerticalLayout>
+      
     </HorizontalLayout>
 
     <!-- 状态栏 -->
@@ -36,7 +42,7 @@
       
       <HorizontalLayout width="225" bkcolor="#FFF08335">
         <Container width="36" height="29" bkimage="file='icons.png' source='42,0,63,21' dest='16,8,36,29' " />
-        <Text text="运行环境：绿化大师无盘" pos="45,11,210,26" float="true" textcolor="#FFFFFFFF" font="0" />
+        <Text text="运行环境：正在检测中" pos="45,11,210,26" float="true" textcolor="#FFFFFFFF" font="0" />
       </HorizontalLayout>
       
       <HorizontalLayout width="115" bkcolor="#FF3D556D">

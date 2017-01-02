@@ -4,6 +4,7 @@
 
 CMainFrameWnd::CMainFrameWnd()
 	: m_pWndShadow(NULL)
+	, m_pProblemList(NULL)
 {
 }
 
@@ -24,12 +25,22 @@ DuiLib::CDuiString CMainFrameWnd::GetSkinFolder()
 
 DuiLib::CDuiString CMainFrameWnd::GetSkinFile()
 {
-	return _T("MainFrame.xml");
+	return _T("main_frame.xml");
 }
 
 LPCTSTR CMainFrameWnd::GetWindowClassName(void) const
 {
 	return _T("MainFrameWnd");
+}
+
+CControlUI* CMainFrameWnd::CreateControl(LPCTSTR pstrClassName)
+{
+	if (_tcsicmp(pstrClassName, szProblemListUIInterFace) == 0)
+	{
+		return new CProblemListUI(m_PaintManager);
+	}
+		
+	return NULL;
 }
 
 void CMainFrameWnd::Notify(TNotifyUI& msg)
@@ -44,6 +55,18 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 			PostQuitMessage(0);
 		}
 	}
+}
+
+void CMainFrameWnd::InitWindow()
+{
+	m_pProblemList = static_cast<CProblemListUI*>(m_PaintManager.FindControl(szProblemList));
+	if (m_pProblemList != NULL)
+	{
+		m_pProblemList->AddGroup(_T("清理"));
+		m_pProblemList->AddGroup(_T("加速"));
+	}
+
+	m_pProblemList->AddItem(_T("清理"), FALSE);
 }
 
 LRESULT CMainFrameWnd::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, bool& bHandled)

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Skin">
+      <UniqueIdentifier>{1a242855-2ad2-45b0-9b12-03c934500dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skin\ProblemList">
+      <UniqueIdentifier>{fef4d25e-d3d8-44c7-902e-c5b6ad8f9a69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -21,6 +27,15 @@
     </None>
     <None Include="BarPCMaster.ico">
       <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\Bin\Skin\main_frame.xml">
+      <Filter>Skin</Filter>
+    </None>
+    <None Include="..\Bin\Skin\problem_list\problem_list_group.xml">
+      <Filter>Skin\ProblemList</Filter>
+    </None>
+    <None Include="..\Bin\Skin\problem_list\problem_list_item.xml">
+      <Filter>Skin\ProblemList</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +54,12 @@
     <ClInclude Include="MainFrameWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ProblemListUI.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlNames.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +69,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MainFrameWnd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProblemListUI.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

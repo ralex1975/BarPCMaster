@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window>
+  <ProblemListItem name="ProblemItem" height="28">
+    <TabLayout name="ProblemTab" selectedid="0" float="true" pos="0,0" width="540" height="28">
+      <HorizontalLayout>
+        <Label name="ProblemText" bordersize="0" textcolor="#FF505050" endellipsis="true" padding="25,0,0,0"/>
+      </HorizontalLayout>
+
+      <HorizontalLayout>
+        <Button name="Ignore" showhtml="true"/>
+        <Button name="Operation" showhtml="true"/>
+      </HorizontalLayout>
+    </TabLayout>
+  </ProblemListItem>
+</Window>

@@ -83,13 +83,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\Bin\Skin\main_frame.xml" />
+    <None Include="..\Bin\Skin\problem_list\problem_list_group.xml" />
+    <None Include="..\Bin\Skin\problem_list\problem_list_item.xml" />
     <None Include="BarPCMaster.ico" />
     <None Include="ReadMe.txt" />
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BarPCMaster.h" />
+    <ClInclude Include="ControlNames.h" />
     <ClInclude Include="MainFrameWnd.h" />
+    <ClInclude Include="ProblemListUI.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -97,6 +102,7 @@
   <ItemGroup>
     <ClCompile Include="BarPCMaster.cpp" />
     <ClCompile Include="MainFrameWnd.cpp" />
+    <ClCompile Include="ProblemListUI.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

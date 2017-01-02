@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BarPCMaster", "BarPCMaster\BarPCMaster.vcxproj", "{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F16E6786-27E5-4490-8A2E-9D6CB06AB848} = {F16E6786-27E5-4490-8A2E-9D6CB06AB848}
