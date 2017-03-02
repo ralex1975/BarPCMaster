@@ -1,12 +1,11 @@
 #pragma once
-#include "ProblemListUI.h"
-#include "ControlNames.h"
+#include "UIProblemList.h"
 
 
 class CMainFrameWnd : public WindowImplBase
 {
 public:
-	CMainFrameWnd();
+	CMainFrameWnd(CDuiString strXMLPath);
 	~CMainFrameWnd();
 
 protected:
@@ -22,8 +21,8 @@ protected:
 	virtual LRESULT		OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 
 private:
-	CWndShadow*		m_pWndShadow;
-
+	// CShadowUI*		m_pShadowUI;
 	CProblemListUI*	m_pProblemList;
+	CDuiString		m_strXMLPath;
 };
 

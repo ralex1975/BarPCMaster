@@ -5,12 +5,12 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BarPCMaster", "BarPCMaster\BarPCMaster.vcxproj", "{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}"
 	ProjectSection(ProjectDependencies) = postProject
-		{F16E6786-27E5-4490-8A2E-9D6CB06AB848} = {F16E6786-27E5-4490-8A2E-9D6CB06AB848}
+		{6D88DD60-E488-4E03-9C99-C9169E78753C} = {6D88DD60-E488-4E03-9C99-C9169E78753C}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "DuiLib\DuiLib.vcxproj", "{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib_Static", "DuiLib\DuiLib_Static.vcxproj", "{F16E6786-27E5-4490-8A2E-9D6CB06AB848}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib_Static", "DuiLib\DuiLib_Static.vcxproj", "{6D88DD60-E488-4E03-9C99-C9169E78753C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,10 @@ Global
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Debug|Win32.Build.0 = Debug|Win32
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Release|Win32.ActiveCfg = Release|Win32
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Release|Win32.Build.0 = Release|Win32
-		{F16E6786-27E5-4490-8A2E-9D6CB06AB848}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F16E6786-27E5-4490-8A2E-9D6CB06AB848}.Debug|Win32.Build.0 = Debug|Win32
-		{F16E6786-27E5-4490-8A2E-9D6CB06AB848}.Release|Win32.ActiveCfg = Release|Win32
-		{F16E6786-27E5-4490-8A2E-9D6CB06AB848}.Release|Win32.Build.0 = Release|Win32
+		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Debug|Win32.Build.0 = Debug|Win32
+		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Release|Win32.ActiveCfg = Release|Win32
+		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

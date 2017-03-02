@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Window>
-    <ProblemListGroup menu="true" inset="5,0,0,0" height="30" 
+    <ProblemListGroup menu="true" inset="10,0,0,0" height="30" defaultexpand="true"
                       itemattr="valign=&quot;vcenter&quot; textpadding=&quot;5,0,0,0&quot; font=&quot;2&quot;" 
                       folderattr="padding=&quot;0,6,0,0&quot; width=&quot;16&quot; height=&quot;16&quot; selectedimage=&quot;problem_list\expland_down.png&quot; normalimage=&quot;problem_list\expland_normal.png&quot;">
     </ProblemListGroup>

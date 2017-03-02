@@ -14,6 +14,7 @@
     <ProjectGuid>{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BarPCMaster</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -21,6 +22,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfAtl>Static</UseOfAtl>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -28,6 +30,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfAtl>Static</UseOfAtl>
+    <PlatformToolset>v140_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -41,13 +44,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)DuiLib;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)Bin</OutDir>
+    <IncludePath>$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)Bin\</OutDir>
+    <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)DuiLib;$(IncludePath)</IncludePath>
-    <OutDir>$(SolutionDir)Bin</OutDir>
+    <IncludePath>$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)Bin\</OutDir>
+    <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -62,6 +67,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)BaseLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>DuiLib_Static_d.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -72,6 +79,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;UILIB_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -80,12 +88,20 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)BaseLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>DuiLib_Static.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\Bin\Skin\main_frame.xml" />
-    <None Include="..\Bin\Skin\problem_list\problem_list_group.xml" />
-    <None Include="..\Bin\Skin\problem_list\problem_list_item.xml" />
+    <None Include="..\Bin\Skin\main_frame.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Bin\Skin\problem_list\problem_list_group.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="..\Bin\Skin\problem_list\problem_list_item.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="BarPCMaster.ico" />
     <None Include="ReadMe.txt" />
     <None Include="small.ico" />
@@ -94,7 +110,7 @@
     <ClInclude Include="BarPCMaster.h" />
     <ClInclude Include="ControlNames.h" />
     <ClInclude Include="MainFrameWnd.h" />
-    <ClInclude Include="ProblemListUI.h" />
+    <ClInclude Include="UIProblemList.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -102,7 +118,7 @@
   <ItemGroup>
     <ClCompile Include="BarPCMaster.cpp" />
     <ClCompile Include="MainFrameWnd.cpp" />
-    <ClCompile Include="ProblemListUI.cpp" />
+    <ClCompile Include="UIProblemList.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

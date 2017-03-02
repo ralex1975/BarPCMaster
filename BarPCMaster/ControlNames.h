@@ -1,4 +1,7 @@
-#pragma once
-#include "stdafx.h"
+#ifndef __CONTROL_NAMES_H__
+#define __CONTROL_NAMES_H__
+#include "StdAfx.h"
 
-const TCHAR szProblemList[] = _T("ProblemList");
+const TCHAR bPCMasterProblemListUIInferFace[] = _T("ProblemList");
+
+#endif

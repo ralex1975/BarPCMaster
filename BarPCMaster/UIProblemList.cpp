@@ -1,5 +1,34 @@
 #include "StdAfx.h"
-#include "ProblemListUI.h"
+#include "UIProblemList.h"
+
+/************************************************************************/
+/*                                                                      */
+/************************************************************************/
+
+CProblemListItemUI::CProblemListItemUI()
+{
+
+}
+
+CProblemListItemUI::~CProblemListItemUI()
+{
+
+}
+
+LPCTSTR CProblemListItemUI::GetClass() const
+{
+	return _T("TreeNodeUI");
+}
+
+LPVOID CProblemListItemUI::GetInterface(LPCTSTR pstrName)
+{
+	if (_tcscmp(pstrName, bPCMasterProblemListItemUIInferFace) == 0)
+	{
+		return static_cast<CProblemListItemUI*>(this);
+	}
+
+	return CTreeNodeUI::GetInterface(pstrName);
+}
 
 /************************************************************************/
 /*       CProblemListGroupUI                                            */
@@ -7,6 +36,51 @@
 CProblemListGroupUI::CProblemListGroupUI()
 {
 
+}
+
+LPCTSTR CProblemListGroupUI::GetClass() const
+{
+	return _T("TreeNodeUI");
+}
+
+LPVOID CProblemListGroupUI::GetInterface(LPCTSTR pstrName)
+{
+	if (_tcscmp(pstrName, bPCMasterProblemListGroupUIInferFace) == 0)
+	{
+		return static_cast<CProblemListGroupUI*>(this);
+	}
+
+	return CTreeNodeUI::GetInterface(pstrName);
+}
+
+void CProblemListGroupUI::SetItemText(LPCTSTR pstrValue)
+{
+	m_GroupName = pstrValue;
+	CTreeNodeUI::SetItemText(pstrValue);
+}
+
+bool CProblemListGroupUI::Add(CProblemListItemUI* pControl, bool bAutoRefreshIndex /*= true*/)
+{
+	bool nRet = CTreeNodeUI::Add(pControl);
+
+	if (bAutoRefreshIndex)
+	{
+		CDuiString text;
+
+		/*int nIndex = GetTreeNodes().GetSize() + 1;
+		text.Format(_T("%s[%d]"), m_GroupName.GetData(), GetTreeNodes().GetSize());
+		CTreeNodeUI::SetItemText(text.GetData());*/
+	}
+
+	return nRet;
+}
+
+bool CProblemListGroupUI::AddAt(CProblemListItemUI* pControl, int iIndex, bool bAutoRefreshIndex /*= true*/)
+{
+	bool nRet = CTreeNodeUI::AddAt(pControl, iIndex);
+	CTreeNodeUI::SetItemText(m_GroupName.GetData());
+
+	return nRet;
 }
 
 void CProblemListGroupUI::SetProblemList(CProblemListUI* pProblemList)
@@ -33,11 +107,11 @@ CProblemListUI::~CProblemListUI()
 
 CControlUI* CProblemListUI::CreateControl(LPCTSTR pstrClass)
 {
-	if (_tcsicmp(pstrClass, szProblemListGroupUIInferFace) == 0)
+	if (_tcsicmp(pstrClass, bPCMasterProblemListGroupUIInferFace) == 0)
 	{
 		return new CProblemListGroupUI();
 	}
-	else if (_tcsicmp(pstrClass, szProblemListItemUIInferFace) == 0)
+	else if (_tcsicmp(pstrClass, bPCMasterProblemListItemUIInferFace) == 0)
 	{
 		return new CProblemListItemUI();
 	}
@@ -85,8 +159,9 @@ bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 	return TRUE;
 }
 
-bool CProblemListUI::AddItem(LPCTSTR szGroupName, bool bAutoRefreshIndex /*= true*/, int nIndex /*= -1*/)
+bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bAutoRefreshIndex /*= true*/, int nIndex /*= -1*/)
 {
+	// 初始化 item 的数据
 	CProblemListItemUI* pListElement = NULL;
 	if (!m_dlgItemBuilder.GetMarkup()->IsValid())
 	{
@@ -102,18 +177,21 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, bool bAutoRefreshIndex /*= tru
 		return NULL;
 	}
 
-	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, _T("ProblemText")));
+	// 给 Text 控件赋值
+	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bPCMasterProblemItemTextControlName));
 	if (NULL != pProblemText)
 	{
-		pProblemText->SetText(_T("Chrome 安装目录缓存文件"));
+		pProblemText->SetText(szProblemText);
 	}
 
-	CProblemListGroupUI* pDefaultGroup = static_cast<CProblemListGroupUI*>(m_PaintManager.FindSubControlByName(this, szGroupName));
+	// 根据传递进来的组名称搜索组控件对象
+	CProblemListGroupUI* pDefaultGroup = static_cast<CProblemListGroupUI*>(m_pManager->FindSubControlByName(this, szGroupName));
 	if (NULL == pDefaultGroup)
 	{
 		return FALSE;
 	}
 
+	// insert item to group
 	if (nIndex == -1)
 	{
 		if (!pDefaultGroup->Add(pListElement))

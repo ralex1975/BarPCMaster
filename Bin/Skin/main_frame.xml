@@ -9,44 +9,56 @@
     <!-- 标题区域 -->
     <HorizontalLayout height="35" bkcolor="#FFEFF5F8">
       <HorizontalLayout>
-        <Container width="25" height="25" bkimage="file='xiaobanma.png' source='0,0,436,435' dest='8,8,30,30' " /> 
+        <Container width="25" height="25" bkimage="file='Skin\xiaobanma.png' source='0,0,436,435' dest='8,8,30,30' " /> 
         <Text text="小斑马网吧优化大师 1.0 Beta" pos="27,10,200,23" float="true" textcolor="#FF000000" font="1" />
       </HorizontalLayout>
       <HorizontalLayout width="50" inset="0,1,0,0">
         <!--<Button name="aboutbtn" tooltip="关于" float="true" pos="0,5,19,24" width="21"
-                normalimage=" file='btn_menu.png' source='0,0,19,19'"
-                hotimage=" file='btn_menu.png' source='19,0,38,19'"
-                pushedimage=" file='btn_menu.png' source='38,0,57,19'"/>-->
+                normalimage=" file='Skin\btn_menu.png' source='0,0,19,19'"
+                hotimage=" file='Skin\btn_menu.png' source='19,0,38,19'"
+                pushedimage=" file='Skin\btn_menu.png' source='38,0,57,19'"/>-->
         <Button name="closebtn" tooltip="关闭" float="true" pos="0,0,50,35" width="50"
-                normalimage=" file='btn_close.png' source='0,0,50,35'"
-                hotimage=" file='btn_close.png' source='50,0,100,35'"
-                pushedimage=" file='btn_close.png' source='100,0,150,35'"/>
+                normalimage=" file='Skin\btn_close.png' source='0,0,50,35'"
+                hotimage=" file='Skin\btn_close.png' source='50,0,100,35'"
+                pushedimage=" file='Skin\btn_close.png' source='100,0,150,35'"/>
       </HorizontalLayout>
     </HorizontalLayout>
 
+    <!-- 中间区域 -->
     <HorizontalLayout>
-      
+      <!-- 左侧问题列表 -->
       <VerticalLayout width="580" bkcolor="#FFFBFCFC" inset="20,20,20,20">
+        <!-- 返回条 -->
+        <VerticalLayout width="580" height="30" bkcolor="#FFFBFCFC">
+          <Button name="return" text="返回" tooltip="返回" bkcolor="#FFC5C5C5" textcolor="#FFFFFFFF" float="true" pos="0,0,50,25" width="50"/>
+        </VerticalLayout>
+        <!-- 进度条 -->
+        <VerticalLayout width="580" height="70" bkcolor="#FFFBFCFC">
+          <Text name="tooltip" text="正在扫描请稍后..." pos="0,20,200,45" float="true" textcolor="#FF222222" font="0"/>
+          <Button name="check_button" text="立即体检" pos="430,0,540,45" float="true" bkcolor="#FFED8033" textcolor="#FFFFFFFF" font="0"/>
+          <Progress name="down_progress_back" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='0,0,116,3'" min="0" max="100" value="100" maxheight="2" maxwidth="540"/>
+          <Progress name="down_progress_front" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='116,0,232,3'" min="0" max="100" value="10" maxheight="2" maxwidth="540"/>
+        </VerticalLayout>
+        <!-- 问题列表 -->
         <ProblemList name="ProblemList" itemminwidth="540" itemalign="center" vscrollbar="true" itembkcolor="#FFFBFCFC" 
                      itemdisabledbkcolor="#FFD5D1CC" itemhotbkcolor="#FFEAF4FC" itemselectedbkcolor="#FFE7E9E9" menu="true" >
         </ProblemList>
       </VerticalLayout>
-      
+      <!-- 右侧工具栏 -->
       <VerticalLayout bkcolor="#FFF7F8F8">
       </VerticalLayout>
-      
     </HorizontalLayout>
 
     <!-- 状态栏 -->
     <HorizontalLayout height="37" bkcolor="#FF2B3E51">
       
       <HorizontalLayout width="225" bkcolor="#FFF08335">
-        <Container width="36" height="29" bkimage="file='icons.png' source='42,0,63,21' dest='16,8,36,29' " />
+        <Container width="36" height="29" bkimage="file='Skin\icons.png' source='42,0,63,21' dest='16,8,36,29' " />
         <Text text="运行环境：正在检测中" pos="45,11,210,26" float="true" textcolor="#FFFFFFFF" font="0" />
       </HorizontalLayout>
       
       <HorizontalLayout width="115" bkcolor="#FF3D556D">
-        <Container width="36" height="28" bkimage="file='user.png' source='0,0,21,21' dest='15,7,36,28' " />
+        <Container width="36" height="28" bkimage="file='Skin\user.png' source='0,0,21,21' dest='15,7,36,28' " />
         <Text text="超级用户" pos="45,12,100,26" float="true" textcolor="#FFFFFFFF" font="1" />
       </HorizontalLayout>
       

@@ -54,10 +54,10 @@
     <ClInclude Include="MainFrameWnd.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ProblemListUI.h">
+    <ClInclude Include="ControlNames.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ControlNames.h">
+    <ClInclude Include="UIProblemList.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,7 +71,7 @@
     <ClCompile Include="MainFrameWnd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ProblemListUI.cpp">
+    <ClCompile Include="UIProblemList.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
