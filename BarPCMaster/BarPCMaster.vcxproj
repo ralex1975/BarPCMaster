@@ -109,6 +109,7 @@
   <ItemGroup>
     <ClInclude Include="BarPCMaster.h" />
     <ClInclude Include="ControlNames.h" />
+    <ClInclude Include="Examination.h" />
     <ClInclude Include="MainFrameWnd.h" />
     <ClInclude Include="UIProblemList.h" />
     <ClInclude Include="Resource.h" />
@@ -117,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BarPCMaster.cpp" />
+    <ClCompile Include="Examination.cpp" />
     <ClCompile Include="MainFrameWnd.cpp" />
     <ClCompile Include="UIProblemList.cpp" />
     <ClCompile Include="stdafx.cpp">

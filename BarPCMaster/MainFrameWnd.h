@@ -1,5 +1,6 @@
 #pragma once
 #include "UIProblemList.h"
+#include "Examination.h"
 
 
 class CMainFrameWnd : public WindowImplBase
@@ -22,7 +23,7 @@ protected:
 
 private:
 	// CShadowUI*		m_pShadowUI;
-	CProblemListUI*	m_pProblemList;
 	CDuiString		m_strXMLPath;
+	CExamination*	m_Examination;
 };
 

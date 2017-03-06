@@ -4,6 +4,7 @@
   <Font id = "0" name="宋体" size="14" bold="false" italic="false" />
   <Font id = "1" name="宋体" size="12" bold="false" italic="false" />
   <Font id = "2" name="宋体" size="14" bold="true" italic="false" />
+  <Font id = "3" name="微软雅黑" size="24" bold="false" italic="false" />
 
   <VerticalLayout bkcolor="#FFFBFCFC">
     <!-- 标题区域 -->
@@ -17,7 +18,7 @@
                 normalimage=" file='Skin\btn_menu.png' source='0,0,19,19'"
                 hotimage=" file='Skin\btn_menu.png' source='19,0,38,19'"
                 pushedimage=" file='Skin\btn_menu.png' source='38,0,57,19'"/>-->
-        <Button name="closebtn" tooltip="关闭" float="true" pos="0,0,50,35" width="50"
+        <Button name="btn_close" tooltip="关闭" float="true" pos="0,0,50,35" width="50"
                 normalimage=" file='Skin\btn_close.png' source='0,0,50,35'"
                 hotimage=" file='Skin\btn_close.png' source='50,0,100,35'"
                 pushedimage=" file='Skin\btn_close.png' source='100,0,150,35'"/>
@@ -26,24 +27,32 @@
 
     <!-- 中间区域 -->
     <HorizontalLayout>
-      <!-- 左侧问题列表 -->
       <VerticalLayout width="580" bkcolor="#FFFBFCFC" inset="20,20,20,20">
-        <!-- 返回条 -->
-        <VerticalLayout width="580" height="30" bkcolor="#FFFBFCFC">
-          <Button name="return" text="返回" tooltip="返回" bkcolor="#FFC5C5C5" textcolor="#FFFFFFFF" float="true" pos="0,0,50,25" width="50"/>
-        </VerticalLayout>
-        <!-- 进度条 -->
-        <VerticalLayout width="580" height="70" bkcolor="#FFFBFCFC">
-          <Text name="tooltip" text="正在扫描请稍后..." pos="0,20,200,45" float="true" textcolor="#FF222222" font="0"/>
-          <Button name="check_button" text="立即体检" pos="430,0,540,45" float="true" bkcolor="#FFED8033" textcolor="#FFFFFFFF" font="0"/>
-          <Progress name="down_progress_back" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='0,0,116,3'" min="0" max="100" value="100" maxheight="2" maxwidth="540"/>
-          <Progress name="down_progress_front" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='116,0,232,3'" min="0" max="100" value="10" maxheight="2" maxwidth="540"/>
+        <!-- 立即体检主界面 -->
+        <VerticalLayout name="tab_layout_main" visible="true">
+          <Button name="btn_background" bkcolor="#FFFFFFFF" bordercolor="#FFC8DFEE" bordersize="1" float="true" pos="148,148,400,300" width="244" height="124"/>
+          <Button name="btn_start" text="立即体检" font="3" tooltip="立即体检" bkcolor="#FF329DE4" textcolor="#FFFFFFFF" hottextcolor="#FFEEEEEE" pushedtextcolor="#FFE6E6E6" float="true" pos="160,160,400,300" width="220" height="100"/>
         </VerticalLayout>
         <!-- 问题列表 -->
-        <ProblemList name="ProblemList" itemminwidth="540" itemalign="center" vscrollbar="true" itembkcolor="#FFFBFCFC" 
-                     itemdisabledbkcolor="#FFD5D1CC" itemhotbkcolor="#FFEAF4FC" itemselectedbkcolor="#FFE7E9E9" menu="true" >
-        </ProblemList>
+        <VerticalLayout name="tab_layout_examination" visible="false">
+          <!-- 返回条 -->
+          <VerticalLayout width="580" height="30" bkcolor="#FFFBFCFC">
+            <Button name="btn_return" visible="false" text="返回" tooltip="返回" bkcolor="#FFC5C5C5" textcolor="#FFFFFFFF" float="true" pos="0,0,50,25" width="50"/>
+          </VerticalLayout>
+          <!-- 进度条 -->
+          <VerticalLayout width="580" height="70" bkcolor="#FFFBFCFC">
+            <Text name="text_tooltip" text="" pos="0,20,300,45" float="true" textcolor="#FF222222" font="0"/>
+            <Button name="btn_examination" text="立即体检" pos="430,0,540,45" float="true" bkcolor="#FFED8033" textcolor="#FFFFFFFF" font="0"/>
+            <Progress name="down_progress_back" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='0,0,116,3'" min="0" max="100" value="100" maxheight="3" maxwidth="540"/>
+            <Progress name="down_progress_front" pos="0,53,565,60" float="true" foreimage="file='Skin\progress_sync_bg.png' source='116,0,232,3'" min="0" max="100" value="0" maxheight="3" maxwidth="540"/>
+          </VerticalLayout>
+          <!-- 问题列表 -->
+          <ProblemList name="problem_list" itemminwidth="540" itemalign="center" vscrollbar="true" itembkcolor="#FFFBFCFC"
+                       itemdisabledbkcolor="#FFD5D1CC" itemhotbkcolor="#FFEAF4FC" itemselectedbkcolor="#FFE7E9E9" menu="true" >
+          </ProblemList>
+        </VerticalLayout>
       </VerticalLayout>
+      
       <!-- 右侧工具栏 -->
       <VerticalLayout bkcolor="#FFF7F8F8">
       </VerticalLayout>

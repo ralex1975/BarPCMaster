@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Window>
-  <ProblemListItem name="ProblemItem" height="28">
-    <TabLayout name="ProblemTab" selectedid="0" float="true" pos="0,0" width="550" height="28">
+  <ProblemListItem name="problem_item" height="28">
+    <TabLayout name="problem_tab" selectedid="0" float="true" pos="0,0" width="550" height="28">
       <HorizontalLayout>
-        <Label name="ProblemItemText" bordersize="0" textcolor="#FF505050" endellipsis="true" padding="25,0,0,0"/>
+        <Label name="label_problem_item" bordersize="0" textcolor="#FF505050" endellipsis="true" padding="25,0,0,0"/>
         <HorizontalLayout pos="450,0,550,28" float="true">
-          <Button name="Ignore" width="30" text="忽略" textcolor="#FF2D97DE" showhtml="true"/>
-          <Button name="Operation" width="60" text="立即处理" textcolor="#FF2D97DE" pos="30,0,90,28" float="true" showhtml="true"/>
+          <Button name="ignore" width="30" text="忽略" textcolor="#FF2D97DE" showhtml="true"/>
+          <Button name="operation" width="60" text="立即处理" textcolor="#FF2D97DE" pos="30,0,90,28" float="true" showhtml="true"/>
         </HorizontalLayout>
       </HorizontalLayout>
     </TabLayout>

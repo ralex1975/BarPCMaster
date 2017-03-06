@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "UIProblemList.h"
+#include "ControlNames.h"
 
 /************************************************************************/
 /*                                                                      */
@@ -22,7 +23,7 @@ LPCTSTR CProblemListItemUI::GetClass() const
 
 LPVOID CProblemListItemUI::GetInterface(LPCTSTR pstrName)
 {
-	if (_tcscmp(pstrName, bPCMasterProblemListItemUIInferFace) == 0)
+	if (_tcscmp(pstrName, bpcProblemListItemUIInferFace) == 0)
 	{
 		return static_cast<CProblemListItemUI*>(this);
 	}
@@ -45,7 +46,7 @@ LPCTSTR CProblemListGroupUI::GetClass() const
 
 LPVOID CProblemListGroupUI::GetInterface(LPCTSTR pstrName)
 {
-	if (_tcscmp(pstrName, bPCMasterProblemListGroupUIInferFace) == 0)
+	if (_tcscmp(pstrName, bpcProblemListGroupUIInferFace) == 0)
 	{
 		return static_cast<CProblemListGroupUI*>(this);
 	}
@@ -107,11 +108,11 @@ CProblemListUI::~CProblemListUI()
 
 CControlUI* CProblemListUI::CreateControl(LPCTSTR pstrClass)
 {
-	if (_tcsicmp(pstrClass, bPCMasterProblemListGroupUIInferFace) == 0)
+	if (_tcsicmp(pstrClass, bpcProblemListGroupUIInferFace) == 0)
 	{
 		return new CProblemListGroupUI();
 	}
-	else if (_tcsicmp(pstrClass, bPCMasterProblemListItemUIInferFace) == 0)
+	else if (_tcsicmp(pstrClass, bpcProblemListItemUIInferFace) == 0)
 	{
 		return new CProblemListItemUI();
 	}
@@ -124,7 +125,7 @@ bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 	CProblemListGroupUI* pListGroup = NULL;
 	if (!m_dlgGroupBuilder.GetMarkup()->IsValid())
 	{
-		pListGroup = static_cast<CProblemListGroupUI*>(m_dlgGroupBuilder.Create(_T("problem_list\\problem_list_group.xml"), (UINT)0, this, &m_PaintManager));
+		pListGroup = static_cast<CProblemListGroupUI*>(m_dlgGroupBuilder.Create(bpcProblemListGroupXML, (UINT)0, this, &m_PaintManager));
 	}
 	else
 	{
@@ -165,7 +166,7 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 	CProblemListItemUI* pListElement = NULL;
 	if (!m_dlgItemBuilder.GetMarkup()->IsValid())
 	{
-		pListElement = static_cast<CProblemListItemUI*>(m_dlgItemBuilder.Create(_T("problem_list\\problem_list_item.xml"), (UINT)0, this, &m_PaintManager));
+		pListElement = static_cast<CProblemListItemUI*>(m_dlgItemBuilder.Create(bpcProblemListItemXML, (UINT)0, this, &m_PaintManager));
 	}
 	else
 	{
@@ -178,7 +179,7 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 	}
 
 	// 给 Text 控件赋值
-	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bPCMasterProblemItemTextControlName));
+	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bpcProblemItemLabel));
 	if (NULL != pProblemText)
 	{
 		pProblemText->SetText(szProblemText);
@@ -191,7 +192,7 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 		return FALSE;
 	}
 
-	// insert item to group
+	// 将 Item 插入到指定分组下
 	if (nIndex == -1)
 	{
 		if (!pDefaultGroup->Add(pListElement))

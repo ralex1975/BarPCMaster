@@ -1,11 +1,8 @@
 #pragma once
 
-const TCHAR bPCMasterProblemListUIInterFace[]		= _T("ProblemList");
-
-const TCHAR bPCMasterProblemListItemUIInferFace[]	= _T("ProblemListItem");
-const TCHAR bPCMasterProblemItemTextControlName[]	= _T("ProblemItemText");
-
-const TCHAR bPCMasterProblemListGroupUIInferFace[]	= _T("ProblemListGroup");
+const TCHAR bpcProblemListUIInterFace[]			= _T("ProblemList");
+const TCHAR bpcProblemListGroupUIInferFace[]	= _T("ProblemListGroup");
+const TCHAR bpcProblemListItemUIInferFace[]		= _T("ProblemListItem");
 
 // --------------------------- CProblemListItemUI
 
