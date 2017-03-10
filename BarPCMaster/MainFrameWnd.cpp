@@ -6,6 +6,13 @@
 CMainFrameWnd::CMainFrameWnd(CDuiString strXMLPath)
 	: m_strXMLPath(strXMLPath)
 	, m_Examination(nullptr)
+	, m_pProblemListUI(nullptr)
+	, m_pExaminationBtn(nullptr)
+	, m_pReturnBtn(nullptr)
+	, m_pTipsText(nullptr)
+	, m_pVLayoutMain(nullptr)
+	, m_pVLayoutExamination(nullptr)
+	, m_pProgressFront(nullptr)
 {
 }
 
@@ -52,10 +59,11 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 		}
 		if (msg.pSender->GetName() == bpcBtnReturn)
 		{
-			if (nullptr != m_Examination)
+			ShowMainLayout();
+			/*if (nullptr != m_Examination)
 			{
 				m_Examination->Back();
-			}
+			}*/
 		}
 		if (msg.pSender->GetName() == bpcBtnExamination)
 		{
@@ -66,6 +74,8 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 		}
 		if (msg.pSender->GetName() == bpcBtnStart)
 		{
+			ShowExaminationLayout();
+
 			if (nullptr != m_Examination)
 			{
 				m_Examination->Start();
@@ -76,11 +86,16 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 
 void CMainFrameWnd::InitWindow()
 {
-	m_Examination = new CExamination(m_PaintManager);
-	if (nullptr != m_Examination)
-	{
-		m_Examination->Init();
-	}
+	// 初始化各个控件
+	m_pProblemListUI = static_cast<CProblemListUI*>(m_PaintManager.FindControl(bpcProblemList));
+	m_pExaminationBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(bpcBtnExamination));
+	m_pReturnBtn = static_cast<CButtonUI*>(m_PaintManager.FindControl(bpcBtnReturn));
+	m_pTipsText = static_cast<CTextUI*>(m_PaintManager.FindControl(bpcTextTooltip));
+	m_pVLayoutMain = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(bpcTabLayoutMain));
+	m_pVLayoutExamination = static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(bpcTabLayoutExamination));
+	m_pProgressFront = static_cast<CProgressUI*>(m_PaintManager.FindControl(bpcProgressFront));
+
+	m_Examination = new CExamination(this);
 }
 
 LRESULT CMainFrameWnd::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, bool& bHandled)
@@ -121,4 +136,56 @@ LRESULT CMainFrameWnd::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& b
 #endif
 
 	return 0;
+}
+
+BOOL CMainFrameWnd::AddGroupToList(LPCTSTR lpGroupName)
+{
+	return m_pProblemListUI->AddGroup(lpGroupName);
+}
+
+BOOL CMainFrameWnd::AddItemToList(LPCTSTR lpGroupName, LPCTSTR lpItemValue)
+{
+	return m_pProblemListUI->AddItem(lpGroupName, lpItemValue);
+}
+
+void CMainFrameWnd::SetProgressValue(int value)
+{
+	m_pProgressFront->SetValue(value);
+}
+
+void CMainFrameWnd::SetBtnText(LPCTSTR lpText)
+{
+	m_pExaminationBtn->SetText(lpText);
+}
+
+void CMainFrameWnd::SetBtnBkColor(DWORD dwColor)
+{
+	m_pExaminationBtn->SetBkColor(dwColor);
+}
+
+void CMainFrameWnd::SetTipsText(LPCTSTR lpTipsText)
+{
+	m_pTipsText->SetText(lpTipsText);
+}
+
+void CMainFrameWnd::ShowReturnButton(bool bIsShow)
+{
+	m_pReturnBtn->SetVisible(bIsShow);
+}
+
+void CMainFrameWnd::ShowMainLayout()
+{
+	m_pReturnBtn->SetVisible(FALSE);
+	m_pVLayoutExamination->SetVisible(FALSE);
+	m_pVLayoutMain->SetVisible(TRUE);
+	m_pTipsText->SetText(_T(""));
+	m_pExaminationBtn->SetText(_T("立即处理"));
+	m_pProblemListUI->RemoveAll();
+}
+
+void CMainFrameWnd::ShowExaminationLayout()
+{
+	m_pVLayoutMain->SetVisible(FALSE);
+	m_pVLayoutExamination->SetVisible(TRUE);
+	m_pProblemListUI->RemoveAll();
 }

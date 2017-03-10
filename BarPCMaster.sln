@@ -1,14 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BarPCMaster", "BarPCMaster\BarPCMaster.vcxproj", "{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6D88DD60-E488-4E03-9C99-C9169E78753C} = {6D88DD60-E488-4E03-9C99-C9169E78753C}
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "DuiLib\DuiLib.vcxproj", "{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib_Static", "DuiLib\DuiLib_Static.vcxproj", "{6D88DD60-E488-4E03-9C99-C9169E78753C}"
 EndProject
@@ -22,10 +20,6 @@ Global
 		{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}.Debug|Win32.Build.0 = Debug|Win32
 		{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}.Release|Win32.ActiveCfg = Release|Win32
 		{87EE3A7D-FD90-4C24-A8E5-A0D9A6598D7F}.Release|Win32.Build.0 = Release|Win32
-		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Debug|Win32.Build.0 = Debug|Win32
-		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Release|Win32.ActiveCfg = Release|Win32
-		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.Release|Win32.Build.0 = Release|Win32
 		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Debug|Win32.ActiveCfg = Debug|Win32
 		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Debug|Win32.Build.0 = Debug|Win32
 		{6D88DD60-E488-4E03-9C99-C9169E78753C}.Release|Win32.ActiveCfg = Release|Win32

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __UIPROBLEMLIST_H__
+#define __UIPROBLEMLIST_H__
 
 const TCHAR bpcProblemListUIInterFace[]			= _T("ProblemList");
 const TCHAR bpcProblemListGroupUIInferFace[]	= _T("ProblemListGroup");
@@ -63,3 +64,4 @@ private:
 	CDialogBuilder		m_dlgItemBuilder;
 };
 
+#endif
