@@ -19,6 +19,9 @@
     <Filter Include="Skin\ProblemList">
       <UniqueIdentifier>{fef4d25e-d3d8-44c7-902e-c5b6ad8f9a69}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DBTools">
+      <UniqueIdentifier>{914c7f7a-359f-4828-b26f-b6ad5f7ebe31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -63,6 +66,12 @@
     <ClInclude Include="Examination.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="DBDataMgr.h">
+      <Filter>DBTools</Filter>
+    </ClInclude>
+    <ClInclude Include="CppSQLite3U.h">
+      <Filter>DBTools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -79,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="Examination.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DBDataMgr.cpp">
+      <Filter>DBTools</Filter>
+    </ClCompile>
+    <ClCompile Include="CppSQLite3U.cpp">
+      <Filter>DBTools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

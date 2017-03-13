@@ -23,6 +23,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib_Static64", "DuiLib\D
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite_Static64", "SQLite\SQLite_Static64.vcxproj", "{BE36B615-B02A-4201-850E-D8C968E3ECED}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite_Test", "SQLite_Test\SQLite_Test.vcxproj", "{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{99A09039-DB36-45E7-9919-8B4078557292} = {99A09039-DB36-45E7-9919-8B4078557292}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite_Test64", "SQLite_Test\SQLite_Test64.vcxproj", "{08C25EB3-1AD1-406B-83BC-5DE797D99840}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BE36B615-B02A-4201-850E-D8C968E3ECED} = {BE36B615-B02A-4201-850E-D8C968E3ECED}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -79,6 +89,22 @@ Global
 		{BE36B615-B02A-4201-850E-D8C968E3ECED}.Release|Win32.Build.0 = Release|x64
 		{BE36B615-B02A-4201-850E-D8C968E3ECED}.Release|x64.ActiveCfg = Release|x64
 		{BE36B615-B02A-4201-850E-D8C968E3ECED}.Release|x64.Build.0 = Release|x64
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Debug|Win32.Build.0 = Debug|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Debug|x64.ActiveCfg = Debug|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Debug|x64.Build.0 = Debug|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Release|Win32.ActiveCfg = Release|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Release|Win32.Build.0 = Release|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Release|x64.ActiveCfg = Release|Win32
+		{6E77F327-D4DE-4C30-9412-1054B4B1ACD6}.Release|x64.Build.0 = Release|Win32
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Debug|Win32.ActiveCfg = Debug|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Debug|Win32.Build.0 = Debug|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Debug|x64.ActiveCfg = Debug|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Debug|x64.Build.0 = Debug|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Release|Win32.ActiveCfg = Release|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Release|Win32.Build.0 = Release|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Release|x64.ActiveCfg = Release|x64
+		{08C25EB3-1AD1-406B-83BC-5DE797D99840}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

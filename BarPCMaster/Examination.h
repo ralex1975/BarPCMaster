@@ -3,6 +3,7 @@
 
 #include <thread>
 #include "MainFrameWnd.h"
+#include "DBDataMgr.h"
 
 /*
 
@@ -19,6 +20,36 @@
 class CMainFrameWnd;
 class CExamination
 {
+	enum EXAMINATION_TYPE
+	{
+		EXT_TYPE_CLEAN,					// 清理
+		EXT_TYPE_SPEEDUP				// 加速
+	};
+
+	enum EXAMINATION_KEYTYPE
+	{
+		EXT_KEYTYPE_INT,				// 数值类型
+		EXT_KEYTYPE_STRING,				// 字符串类型
+		EXT_KEYTYPE_BINARY				// 二进制类型
+	};
+
+	enum EXAMINATION_OPERATION
+	{
+		EXT_OPT_DIRECTORY,				// 清理目录
+		EXT_OPT_FILE,					// 清理文件
+		EXT_OPT_REG32,					// 加速注册表
+		EXT_OPT_REG64,					// 加速注册表
+	};
+
+	enum EXAMINATION_COMPATISON
+	{
+		EXT_COMPT_LT,
+		EXT_COMPT_GT,
+		EXT_COMPT_EQUAL,
+		EXT_COMPT_LTE,
+		EXT_COMPT_GTE
+	};
+
 public:
 	CExamination(CMainFrameWnd* pMainFrameWnd);
 	~CExamination();
@@ -33,6 +64,8 @@ public:
 private:
 	BOOL					m_bIsRunning;
 	BOOL					m_bIsStop;
+
+	CDBDataMgr*				m_pDBMgr;
 
 	CMainFrameWnd*			m_pMainFrameWnd;
 

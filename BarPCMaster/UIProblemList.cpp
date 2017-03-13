@@ -86,7 +86,7 @@ bool CProblemListGroupUI::AddAt(CProblemListItemUI* pControl, int iIndex, bool b
 
 void CProblemListGroupUI::SetProblemList(CProblemListUI* pProblemList)
 {
-	if (NULL != pProblemList)
+	if (nullptr != pProblemList)
 	{
 		m_pProblemList = pProblemList;
 	}
@@ -117,12 +117,12 @@ CControlUI* CProblemListUI::CreateControl(LPCTSTR pstrClass)
 		return new CProblemListItemUI();
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 {
-	CProblemListGroupUI* pListGroup = NULL;
+	CProblemListGroupUI* pListGroup = nullptr;
 	if (!m_dlgGroupBuilder.GetMarkup()->IsValid())
 	{
 		pListGroup = static_cast<CProblemListGroupUI*>(m_dlgGroupBuilder.Create(bpcProblemListGroupXML, (UINT)0, this, &m_PaintManager));
@@ -131,7 +131,7 @@ bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 	{
 		pListGroup = static_cast<CProblemListGroupUI*>(m_dlgGroupBuilder.Create(this, &m_PaintManager));
 	}
-	if (pListGroup == NULL)
+	if (pListGroup == nullptr)
 	{
 		return FALSE;
 	}
@@ -162,8 +162,13 @@ bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 
 bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bAutoRefreshIndex /*= true*/, int nIndex /*= -1*/)
 {
+	if (nullptr == GetGroup(szGroupName))
+	{
+		AddGroup(szGroupName);
+	}
+
 	// 初始化 item 的数据
-	CProblemListItemUI* pListElement = NULL;
+	CProblemListItemUI* pListElement = nullptr;
 	if (!m_dlgItemBuilder.GetMarkup()->IsValid())
 	{
 		pListElement = static_cast<CProblemListItemUI*>(m_dlgItemBuilder.Create(bpcProblemListItemXML, (UINT)0, this, &m_PaintManager));
@@ -173,21 +178,21 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 		pListElement = static_cast<CProblemListItemUI*>(m_dlgItemBuilder.Create(this, &m_PaintManager));
 	}
 
-	if (pListElement == NULL)
+	if (pListElement == nullptr)
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// 给 Text 控件赋值
 	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bpcProblemItemLabel));
-	if (NULL != pProblemText)
+	if (nullptr != pProblemText)
 	{
 		pProblemText->SetText(szProblemText);
 	}
 
 	// 根据传递进来的组名称搜索组控件对象
 	CProblemListGroupUI* pDefaultGroup = static_cast<CProblemListGroupUI*>(m_pManager->FindSubControlByName(this, szGroupName));
-	if (NULL == pDefaultGroup)
+	if (nullptr == pDefaultGroup)
 	{
 		return FALSE;
 	}
@@ -211,4 +216,15 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 	}
 
 	return TRUE;
+}
+
+CProblemListGroupUI* CProblemListUI::GetGroup(LPCTSTR szGroupName)
+{
+	CProblemListGroupUI* pGroup = static_cast<CProblemListGroupUI*>(m_PaintManager.FindControl(szGroupName));
+	if (nullptr == pGroup)
+	{
+		return nullptr;
+	}
+
+	return pGroup;
 }

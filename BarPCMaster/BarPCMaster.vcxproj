@@ -44,13 +44,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Bin\</OutDir>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Bin\</OutDir>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -66,7 +66,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)BaseLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DuiLib_Static_d.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuiLib_Static_d.lib;SQLite_Static_d.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -87,7 +87,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)BaseLib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>DuiLib_Static.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DuiLib_Static.lib;SQLite_Static.lib;Comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -109,6 +109,8 @@
   <ItemGroup>
     <ClInclude Include="BarPCMaster.h" />
     <ClInclude Include="ControlNames.h" />
+    <ClInclude Include="CppSQLite3U.h" />
+    <ClInclude Include="DBDataMgr.h" />
     <ClInclude Include="Examination.h" />
     <ClInclude Include="MainFrameWnd.h" />
     <ClInclude Include="UIProblemList.h" />
@@ -118,6 +120,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BarPCMaster.cpp" />
+    <ClCompile Include="CppSQLite3U.cpp" />
+    <ClCompile Include="DBDataMgr.cpp" />
     <ClCompile Include="Examination.cpp" />
     <ClCompile Include="MainFrameWnd.cpp" />
     <ClCompile Include="UIProblemList.cpp" />

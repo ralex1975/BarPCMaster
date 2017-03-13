@@ -58,10 +58,12 @@ public:
 	bool AddGroup(LPCTSTR szGroupName, int nIndex = -1);
 	bool AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bAutoRefreshIndex = true, int nIndex = -1);
 
+	CProblemListGroupUI* GetGroup(LPCTSTR szGroupName);
+
 private:
-	CPaintManagerUI&	m_PaintManager;
-	CDialogBuilder		m_dlgGroupBuilder;
-	CDialogBuilder		m_dlgItemBuilder;
+	CPaintManagerUI&		m_PaintManager;
+	CDialogBuilder			m_dlgGroupBuilder;
+	CDialogBuilder			m_dlgItemBuilder;
 };
 
 #endif
