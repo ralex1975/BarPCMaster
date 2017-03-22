@@ -160,7 +160,7 @@ bool CProblemListUI::AddGroup(LPCTSTR szGroupName, int nIndex /*= -1*/)
 	return TRUE;
 }
 
-bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bAutoRefreshIndex /*= true*/, int nIndex /*= -1*/)
+bool CProblemListUI::AddItem(LPCTSTR szGroupName, PPROBLEMITEM pstExaminaion, bool bAutoRefreshIndex /*= true*/, int nIndex /*= -1*/)
 {
 	if (nullptr == GetGroup(szGroupName))
 	{
@@ -183,11 +183,15 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 		return nullptr;
 	}
 
+	// 备份控件的信息并设置 Tag
+	pstExaminaion->pControl = reinterpret_cast<void*>(pListElement);
+	pListElement->SetTag(reinterpret_cast<UINT_PTR>(pstExaminaion));
+
 	// 给 Text 控件赋值
 	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bpcProblemItemLabel));
 	if (nullptr != pProblemText)
 	{
-		pProblemText->SetText(szProblemText);
+		pProblemText->SetText(pstExaminaion->strDescription.GetData());
 	}
 
 	// 根据传递进来的组名称搜索组控件对象
@@ -220,6 +224,7 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bA
 
 CProblemListGroupUI* CProblemListUI::GetGroup(LPCTSTR szGroupName)
 {
+	// 通过搜索控件查找是否有某个分组
 	CProblemListGroupUI* pGroup = static_cast<CProblemListGroupUI*>(m_PaintManager.FindControl(szGroupName));
 	if (nullptr == pGroup)
 	{

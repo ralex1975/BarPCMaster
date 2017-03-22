@@ -5,6 +5,28 @@
 #include "BarPCMaster.h"
 #include "MainFrameWnd.h"
 
+// 初始化日志模块
+INITIALIZE_EASYLOGGINGPP
+
+void InitlizeLogger()
+{
+	el::Configurations defaultConf;
+	defaultConf.setToDefault();
+
+	// 设置全局的属性
+	defaultConf.setGlobally(el::ConfigurationType::Enabled, "true");
+	defaultConf.setGlobally(el::ConfigurationType::ToFile, "true");
+	defaultConf.setGlobally(el::ConfigurationType::ToStandardOutput, "false");
+	defaultConf.setGlobally(el::ConfigurationType::Format, "[%datetime{%Y-%M-%d %H:%m:%s.%g}][%fbase:%line][TD=%thread][%level] - %msg");
+	defaultConf.setGlobally(el::ConfigurationType::MaxLogFileSize, "1125899906842624");
+
+	// 设置 INFO 级别的日志属性
+	defaultConf.set(el::Level::Info, el::ConfigurationType::Format, "[%datetime{%Y-%M-%d %H:%m:%s.%g}][TD=%thread][%level] - %msg");
+
+	el::Loggers::reconfigureLogger("default", defaultConf);
+
+	LOG(INFO) << "==================== InitlizeLogger =====================";
+}
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -13,6 +35,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
+
+	InitlizeLogger();
 
  	HRESULT hr = ::CoInitialize(NULL);
 	if (FAILED(hr))
@@ -36,7 +60,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	CPaintManagerUI::MessageLoop();
 
-	if (NULL != pFrame)
+	if (nullptr != pFrame)
 	{
 		delete pFrame;
 	}

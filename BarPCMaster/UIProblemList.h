@@ -1,6 +1,8 @@
 #ifndef __UIPROBLEMLIST_H__
 #define __UIPROBLEMLIST_H__
 
+#include "DBDataMgr.h"
+
 const TCHAR bpcProblemListUIInterFace[]			= _T("ProblemList");
 const TCHAR bpcProblemListGroupUIInferFace[]	= _T("ProblemListGroup");
 const TCHAR bpcProblemListItemUIInferFace[]		= _T("ProblemListItem");
@@ -45,7 +47,9 @@ private:
 
 // --------------------------- CProblemListUI
 
-class CProblemListUI : public CTreeViewUI, public IDialogBuilderCallback
+class CProblemListUI 
+	: public CTreeViewUI
+	, public IDialogBuilderCallback
 {
 public:
 	enum { SCROLL_TIMERID = 10 };
@@ -56,7 +60,7 @@ public:
 	virtual CControlUI* CreateControl(LPCTSTR pstrClass);
 
 	bool AddGroup(LPCTSTR szGroupName, int nIndex = -1);
-	bool AddItem(LPCTSTR szGroupName, LPCTSTR szProblemText, bool bAutoRefreshIndex = true, int nIndex = -1);
+	bool AddItem(LPCTSTR szGroupName, PPROBLEMITEM pstExaminaion, bool bAutoRefreshIndex = true, int nIndex = -1);
 
 	CProblemListGroupUI* GetGroup(LPCTSTR szGroupName);
 

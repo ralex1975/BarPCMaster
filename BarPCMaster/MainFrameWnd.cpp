@@ -59,6 +59,7 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 		}
 		if (msg.pSender->GetName() == bpcBtnReturn)
 		{
+			LOG(INFO) << _T("Return to main layout...");
 			ShowMainLayout();
 			/*if (nullptr != m_Examination)
 			{
@@ -69,11 +70,20 @@ void CMainFrameWnd::Notify(TNotifyUI& msg)
 		{
 			if (nullptr != m_Examination)
 			{
-				m_Examination->IsRunning() ? m_Examination->Stop() : MessageBox(NULL, _T("开始处理"), _T(""), MB_OK);
+				if (m_Examination->IsRunning())
+				{
+					LOG(INFO) << _T("Stop examination...");
+					m_Examination->Stop();
+				}
+				else
+				{
+					MessageBox(NULL, _T("开始处理"), _T(""), MB_OK);
+				}
 			}
 		}
 		if (msg.pSender->GetName() == bpcBtnStart)
 		{
+			LOG(INFO) << _T("Begin examination...");
 			ShowExaminationLayout();
 
 			if (nullptr != m_Examination)
@@ -140,12 +150,14 @@ LRESULT CMainFrameWnd::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& b
 
 BOOL CMainFrameWnd::AddGroupToList(LPCTSTR lpGroupName)
 {
+	LOG(INFO) << _T("Add a new group [") << lpGroupName << _T("] to problem list.");
 	return m_pProblemListUI->AddGroup(lpGroupName);
 }
 
-BOOL CMainFrameWnd::AddItemToList(LPCTSTR lpGroupName, LPCTSTR lpItemValue)
+BOOL CMainFrameWnd::AddItemToList(LPCTSTR lpGroupName, PPROBLEMITEM pstExamination)
 {
-	return m_pProblemListUI->AddItem(lpGroupName, lpItemValue);
+	//LOG(INFO) << _T("Add a new item [") << lpItemValue << _T("] to group [") << lpGroupName << _T("]");
+	return m_pProblemListUI->AddItem(lpGroupName, pstExamination);
 }
 
 void CMainFrameWnd::SetProgressValue(int value)

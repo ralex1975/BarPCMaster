@@ -17,6 +17,8 @@
 #define STOP_BTN_BKCOLOR	0xFFE7614E
 #define START_BTN_BKCOLOR	0xFFED8033
 
+#define TOTALBYTES			2048
+
 class CMainFrameWnd;
 class CExamination
 {
@@ -28,26 +30,24 @@ class CExamination
 
 	enum EXAMINATION_KEYTYPE
 	{
-		EXT_KEYTYPE_INT,				// 数值类型
+		EXT_KEYTYPE_DWORD,				// 32位 DWORD 类型
 		EXT_KEYTYPE_STRING,				// 字符串类型
-		EXT_KEYTYPE_BINARY				// 二进制类型
 	};
 
 	enum EXAMINATION_OPERATION
 	{
-		EXT_OPT_DIRECTORY,				// 清理目录
-		EXT_OPT_FILE,					// 清理文件
-		EXT_OPT_REG32,					// 加速注册表
-		EXT_OPT_REG64,					// 加速注册表
+		EXT_OPT_FILES,					// 清理指定文件
+		EXT_OPT_REG32,					// 32位注册表
+		EXT_OPT_REG64,					// 64位注册表
 	};
 
 	enum EXAMINATION_COMPATISON
 	{
-		EXT_COMPT_LT,
-		EXT_COMPT_GT,
-		EXT_COMPT_EQUAL,
-		EXT_COMPT_LTE,
-		EXT_COMPT_GTE
+		EXT_COMPT_LT = -2,				// 小于
+		EXT_COMPT_LTE,					// 小于等于
+		EXT_COMPT_EQUAL,				// 等于
+		EXT_COMPT_GTE,					// 大于等于
+		EXT_COMPT_GT,					// 大于
 	};
 
 public:
@@ -61,24 +61,19 @@ public:
 	static VOID BeginExamation(CExamination* pExamination);
 	VOID		ExamationThreadInstance();
 
+	// 功能函数
+	DWORD		ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG& dwFileSize);
+	DWORD		ScanRegistry(const PROBLEMITEM& refProblemData);
+
+	CDuiString	GetSizeString(LONGLONG llSize);
+
 private:
-	BOOL					m_bIsRunning;
-	BOOL					m_bIsStop;
-
-	CDBDataMgr*				m_pDBMgr;
-
-	CMainFrameWnd*			m_pMainFrameWnd;
-
-	//CProblemListUI*			m_pProblemListUI;		// 问题列表
-	//CButtonUI*				m_pExaminationBtn;		// 立即体检按钮
-	//CButtonUI*				m_pReturnBtn;			// 返回按钮
-	//CTextUI*				m_pTipsText;			// 提示信息
-	//CProgressUI*			m_pProgressFront;		// 进度条
-
-	//CVerticalLayoutUI*		m_pVLayoutMain;			// 主界面
-	//CVerticalLayoutUI*		m_pVLayoutExamination;	// 体检界面
-
-	std::thread*			m_pExamationThread;		// 体检线程
+	BOOL						m_bIsRunning;
+	BOOL						m_bIsStop;
+	CDBDataMgr*					m_pDBMgr;
+	CMainFrameWnd*				m_pMainFrameWnd;
+	std::thread*				m_pExamationThread;	// 体检线程
+	std::vector<PROBLEMITEM>	m_vecProblemList;	// 问题列表
 
 };
 

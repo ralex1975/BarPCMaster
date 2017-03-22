@@ -19,7 +19,10 @@
     <Filter Include="Skin\ProblemList">
       <UniqueIdentifier>{fef4d25e-d3d8-44c7-902e-c5b6ad8f9a69}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DBTools">
+    <Filter Include="Common">
+      <UniqueIdentifier>{37be4f01-e5eb-4671-a043-219db85318b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
       <UniqueIdentifier>{e0050a2d-6318-42a3-9d78-b1d2f7f9dc5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -67,10 +70,13 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="DBDataMgr.h">
-      <Filter>DBTools</Filter>
+      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="CppSQLite3U.h">
-      <Filter>DBTools</Filter>
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\easylogging++.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -90,10 +96,13 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DBDataMgr.cpp">
-      <Filter>DBTools</Filter>
+      <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="CppSQLite3U.cpp">
-      <Filter>DBTools</Filter>
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\easylogging++.cc">
+      <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

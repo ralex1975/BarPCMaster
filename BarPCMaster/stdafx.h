@@ -27,7 +27,14 @@
 #include <list>
 #include <map>
 
+// DuiLib
 #include "UIlib.h"
 #include "Utils/Utils.h"
-
 using namespace DuiLib;
+
+// EasyLogging++
+#define ELPP_STL_LOGGING
+#define ELPP_THREAD_SAFE
+#define ELPP_UNICODE
+#define ELPP_DEFAULT_LOG_FILE "Logs\\BarPCMaster%datetime{%Y%M%d}.log"
+#include "easylogging++.h"

@@ -44,13 +44,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Common\;$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)Bin\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Common\;$(SolutionDir)SQLite\;$(SolutionDir)DuiLib\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)Bin\</OutDir>
     <IntDir>$(PlatformName)\$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -107,6 +107,7 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\easylogging++.h" />
     <ClInclude Include="BarPCMaster.h" />
     <ClInclude Include="ControlNames.h" />
     <ClInclude Include="CppSQLite3U.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\easylogging++.cc" />
     <ClCompile Include="BarPCMaster.cpp" />
     <ClCompile Include="CppSQLite3U.cpp" />
     <ClCompile Include="DBDataMgr.cpp" />

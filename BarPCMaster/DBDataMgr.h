@@ -22,7 +22,20 @@
 "COMPARISON		INTEGER, " \
 "NOTES			VARCHAR(256))")
 
-typedef struct _tag_EXAMINATION 
+/*
+	DESCRIPTION		问题描述，显示在界面上
+	STATUS			问题的状态，已经解决还是已经忽略
+	TYPE			问题类型，清理还是加速还是其他
+	OPERATION		相关操作，清理目录，优化注册表等
+	PATH			问题关联的路径
+	KEY				问题关联的文件信息或者注册表 Key 信息
+	KEYTYPE			问题关联的注册表值类型信息
+	VALUE			问题关联的注册表值信息，也是一个正常的参考值
+	COMPARISON		大于还是小于还是等于参考值
+	NOTES			备注信息，不显示，暂时无用
+*/
+
+typedef struct _tag_PROBLEMITEM
 {
 	int				nID;
 	CDuiString		strDescription;
@@ -31,11 +44,12 @@ typedef struct _tag_EXAMINATION
 	int				nOperation;
 	CDuiString		strPath;
 	CDuiString		strKey;
-	CDuiString		strKeyType;
+	int				strKeyType;
 	CDuiString		strValue;
 	int				nComparison;
 	CDuiString		strNotes;
-} EXAMINATION, *PEXAMINATION;
+	void*			pControl;
+} PROBLEMITEM, *PPROBLEMITEM;
 
 class CDBDataMgr
 {
@@ -45,7 +59,7 @@ public:
 
 	void	Init();
 	UINT	GetRowCount();
-	BOOL	GetAllData(std::vector<EXAMINATION>& vecExaminationList);
+	BOOL	GetAllData(std::vector<PROBLEMITEM>& vecExaminationList);
 
 private:
 	CppSQLite3DB*	m_pDB;

@@ -25,7 +25,7 @@ protected:
 
 public:
 	BOOL AddGroupToList(LPCTSTR lpGroupName);
-	BOOL AddItemToList(LPCTSTR lpGroupName, LPCTSTR lpItemValue);
+	BOOL AddItemToList(LPCTSTR lpGroupName, PPROBLEMITEM pstExamination);
 	void SetProgressValue(int value);
 	void SetBtnText(LPCTSTR lpText);
 	void SetBtnBkColor(DWORD dwColor);

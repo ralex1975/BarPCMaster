@@ -50,7 +50,7 @@ UINT CDBDataMgr::GetRowCount()
 	return m_pDB->execScalar(strSQL);
 }
 
-BOOL CDBDataMgr::GetAllData(std::vector<EXAMINATION>& vecExaminationList)
+BOOL CDBDataMgr::GetAllData(std::vector<PROBLEMITEM>& vecExaminationList)
 {
 	BOOL bRet = FALSE;
 
@@ -60,7 +60,7 @@ BOOL CDBDataMgr::GetAllData(std::vector<EXAMINATION>& vecExaminationList)
 
 		while (!queryObj.eof())
 		{
-			EXAMINATION stRowData;
+			PROBLEMITEM stRowData = { 0 };
 
 			stRowData.nID = queryObj.getIntField(_T("ID"));
 			stRowData.strDescription = queryObj.getStringField(_T("DESCRIPTION"));
@@ -69,7 +69,7 @@ BOOL CDBDataMgr::GetAllData(std::vector<EXAMINATION>& vecExaminationList)
 			stRowData.nOperation = queryObj.getIntField(_T("OPERATION"));
 			stRowData.strPath = queryObj.getStringField(_T("PATH"));
 			stRowData.strKey = queryObj.getStringField(_T("KEY"));
-			stRowData.strKeyType = queryObj.getStringField(_T("KEYTYPE"));
+			stRowData.strKeyType = queryObj.getIntField(_T("KEYTYPE"));
 			stRowData.strValue = queryObj.getStringField(_T("VALUE"));
 			stRowData.nComparison = queryObj.getIntField(_T("COMPARISON"));
 			stRowData.strNotes = queryObj.getStringField(_T("NOTES"));
