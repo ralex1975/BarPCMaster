@@ -41,7 +41,7 @@ UINT CDBDataMgr::GetRowCount()
 		return 0;
 	}
 
-	CDuiString strSQL = _T("");
+	CString strSQL = _T("");
 
 	strSQL = _T("SELECT COUNT(*) FROM ");
 	strSQL += SQLITE_DB_TABLE;
@@ -69,7 +69,8 @@ BOOL CDBDataMgr::GetAllData(std::vector<PROBLEMITEM>& vecExaminationList)
 			stRowData.nOperation = queryObj.getIntField(_T("OPERATION"));
 			stRowData.strPath = queryObj.getStringField(_T("PATH"));
 			stRowData.strKey = queryObj.getStringField(_T("KEY"));
-			stRowData.strKeyType = queryObj.getIntField(_T("KEYTYPE"));
+			stRowData.nKeyType = queryObj.getIntField(_T("KEYTYPE"));
+			stRowData.nCompareType = queryObj.getIntField(_T("COMPARETYPE"));
 			stRowData.strValue = queryObj.getStringField(_T("VALUE"));
 			stRowData.nComparison = queryObj.getIntField(_T("COMPARISON"));
 			stRowData.strNotes = queryObj.getStringField(_T("NOTES"));
@@ -87,5 +88,28 @@ BOOL CDBDataMgr::GetAllData(std::vector<PROBLEMITEM>& vecExaminationList)
 		bRet = FALSE;
 	}
 	
+	return bRet;
+}
+
+BOOL CDBDataMgr::InsertItem(const PROBLEMITEM& pProblemItem)
+{
+	BOOL bRet = FALSE;
+
+	CString strSQL = _T("");
+	strSQL.Format(_T("INSERT INTO EXAMINATION VALUES(NULL,'%s',%d,%d,%d,'%s','%s',%d,%d,'%s',%d,'%s');"),
+		pProblemItem.strDescription,
+		pProblemItem.bStatus,
+		pProblemItem.nType,
+		pProblemItem.nOperation,
+		pProblemItem.strPath.GetString(),
+		pProblemItem.strKey.GetString(),
+		pProblemItem.nKeyType,
+		pProblemItem.nCompareType,
+		pProblemItem.strValue.GetString(),
+		pProblemItem.nComparison,
+		pProblemItem.strNotes);
+
+	m_pDB->execDML(strSQL.GetString());
+
 	return bRet;
 }

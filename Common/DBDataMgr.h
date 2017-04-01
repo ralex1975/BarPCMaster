@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CppSQLite3U.h"
+#include <vector>
 
 /*
 数据库相关宏
@@ -18,6 +19,7 @@
 "PATH			VARCHAR(512)	NOT NULL, " \
 "KEY			VARCHAR(256), " \
 "KEYTYPE		VARCHAR(32), " \
+"COMPARETYPE	INTEGER" \
 "VALUE			VARCHAR(256), " \
 "COMPARISON		INTEGER, " \
 "NOTES			VARCHAR(256))")
@@ -38,16 +40,17 @@
 typedef struct _tag_PROBLEMITEM
 {
 	int				nID;
-	CDuiString		strDescription;
+	CString		strDescription;
 	BOOL			bStatus;
 	int				nType;
 	int				nOperation;
-	CDuiString		strPath;
-	CDuiString		strKey;
-	int				strKeyType;
-	CDuiString		strValue;
+	CString		strPath;
+	CString		strKey;
+	int				nKeyType;
+	int				nCompareType;
+	CString		strValue;
 	int				nComparison;
-	CDuiString		strNotes;
+	CString		strNotes;
 	void*			pControl;
 } PROBLEMITEM, *PPROBLEMITEM;
 
@@ -60,9 +63,10 @@ public:
 	void	Init();
 	UINT	GetRowCount();
 	BOOL	GetAllData(std::vector<PROBLEMITEM>& vecExaminationList);
+	BOOL	InsertItem(const PROBLEMITEM& pProblemItem);
 
 private:
 	CppSQLite3DB*	m_pDB;
-	CDuiString		m_strPath;
+	CString		m_strPath;
 };
 

@@ -69,13 +69,16 @@
     <ClInclude Include="Examination.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="DBDataMgr.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="CppSQLite3U.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="..\Common\easylogging++.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\DBDataMgr.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\CppSQLite3U.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\GlobalDefine.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,14 +98,14 @@
     <ClCompile Include="Examination.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="DBDataMgr.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="CppSQLite3U.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="..\Common\easylogging++.cc">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\DBDataMgr.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\CppSQLite3U.cpp">
+      <Filter>Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

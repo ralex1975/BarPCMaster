@@ -4,6 +4,7 @@
 #include <thread>
 #include "MainFrameWnd.h"
 #include "DBDataMgr.h"
+#include "GlobalDefine.h"
 
 /*
 
@@ -17,39 +18,12 @@
 #define STOP_BTN_BKCOLOR	0xFFE7614E
 #define START_BTN_BKCOLOR	0xFFED8033
 
-#define TOTALBYTES			2048
+#define ERROR_INVALID_KEY				0xE0000001
+#define ERROR_VALUE_ARE_NOT_EQUAL		0xE0000002
 
 class CMainFrameWnd;
 class CExamination
 {
-	enum EXAMINATION_TYPE
-	{
-		EXT_TYPE_CLEAN,					// 清理
-		EXT_TYPE_SPEEDUP				// 加速
-	};
-
-	enum EXAMINATION_KEYTYPE
-	{
-		EXT_KEYTYPE_DWORD,				// 32位 DWORD 类型
-		EXT_KEYTYPE_STRING,				// 字符串类型
-	};
-
-	enum EXAMINATION_OPERATION
-	{
-		EXT_OPT_FILES,					// 清理指定文件
-		EXT_OPT_REG32,					// 32位注册表
-		EXT_OPT_REG64,					// 64位注册表
-	};
-
-	enum EXAMINATION_COMPATISON
-	{
-		EXT_COMPT_LT = -2,				// 小于
-		EXT_COMPT_LTE,					// 小于等于
-		EXT_COMPT_EQUAL,				// 等于
-		EXT_COMPT_GTE,					// 大于等于
-		EXT_COMPT_GT,					// 大于
-	};
-
 public:
 	CExamination(CMainFrameWnd* pMainFrameWnd);
 	~CExamination();
@@ -61,9 +35,19 @@ public:
 	static VOID BeginExamation(CExamination* pExamination);
 	VOID		ExamationThreadInstance();
 
+	BOOL		Clean(PROBLEMITEM& ProblemData);
+	BOOL		SpeedUp(PROBLEMITEM& ProblemData);
+
 	// 功能函数
-	DWORD		ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG& dwFileSize);
 	DWORD		ScanRegistry(const PROBLEMITEM& refProblemData);
+	DWORD		ScanRegistryEx(const PROBLEMITEM& refProblemData);
+
+	DWORD		SearchDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG& dwFileSize);
+	DWORD		SearchRegistry(const PROBLEMITEM& ProblemData, __out LPBYTE& pData);
+	DWORD		SearchRegistryEx(const PROBLEMITEM& ProblemData);
+
+	BOOL		CompareString(const PBYTE pData, CDuiString strDefaultValue, int nComparison, int nCompareType);
+	BOOL		CompareDWORD(const PBYTE pData, CDuiString strDefaultValue, int nComparison, int nCompareType);
 
 	CDuiString	GetSizeString(LONGLONG llSize);
 

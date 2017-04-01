@@ -113,55 +113,28 @@ VOID CExamination::ExamationThreadInstance()
 			strTipsText.Format(_T("检查 %s ..."), stRowData.strDescription);
 			m_pMainFrameWnd->SetTipsText(strTipsText);
 
-			// 判断操作类型
-			switch (stRowData.nOperation)
-			{
-			case EXT_OPT_FILES:
-				{
-					DWORD	 dwError = 0;
-					LONGLONG llSize = 0;
-
-					dwError = ScanDirectory(stRowData.strPath, stRowData.strKey, llSize);
-					if (0 != dwError || 0 == llSize)
-					{
-						// 如果出现错误或者扫描的目录没有垃圾文件，那么跳出
-						LOG(INFO) << _T("Has no files, dwError = ") << dwError
-							<< _T(", llSize = ") << llSize;
-						continue;
-					}
-
-					stRowData.strDescription += _T(" (");
-					stRowData.strDescription += GetSizeString(llSize);
-					stRowData.strDescription += _T(")");
-					LOG(INFO) << _T("扫描目录 ") << stRowData.strPath.GetData()
-						<< _T(" 有残留文件大小 ") << llSize << " Byte.";
-					break;
-				}
-			case EXT_OPT_REG64:
-			case EXT_OPT_REG32:
-				{
-					DWORD dwError = 0;
-					dwError = ScanRegistry(stRowData);
-					if (0 != dwError)
-					{
-						// 没有找到指定的注册表或内容不匹配
-						LOG(INFO) << _T("Registry key not found, ")
-							<< stRowData.strPath << _T(", key = ")
-							<< stRowData.strKey;
-						continue;
-					}
-					break;
-				}
-			}
-
 			switch (stRowData.nType)
 			{
 			case EXT_TYPE_CLEAN:
-				strGroup = _T("清理");
-				break;
+				{
+					if (!Clean(stRowData))
+					{
+						continue;
+					}
+
+					strGroup = _T("清理");
+					break;
+				}
 			case EXT_TYPE_SPEEDUP:
-				strGroup = _T("加速");
-				break;
+				{
+					if (!SpeedUp(stRowData))
+					{
+						continue;
+					}
+
+					strGroup = _T("加速");
+					break;
+				}
 			}
 
 			m_pMainFrameWnd->AddItemToList(strGroup, &stRowData);
@@ -192,7 +165,106 @@ VOID CExamination::ExamationThreadInstance()
 	m_bIsRunning = FALSE;
 }
 
-DWORD CExamination::ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG& dwFileSize)
+BOOL CExamination::Clean(PROBLEMITEM& ProblemData)
+{
+	BOOL bRet = FALSE;
+
+	// 判断操作类型
+	switch (ProblemData.nOperation)
+	{
+	case EXT_OPT_FILES:
+		{
+			DWORD	 dwError = 0;
+			LONGLONG llSize = 0;
+
+			dwError = SearchDirectory(ProblemData.strPath, ProblemData.strKey, llSize);
+			if (0 != dwError || 0 == llSize)
+			{
+				// 如果出现错误或者扫描的目录没有垃圾文件，那么跳出
+				LOG(INFO) << _T("Has no files, dwError = ") << dwError
+					<< _T(", llSize = ") << llSize;
+				break;
+			}
+
+			// 修改显示文字，增加垃圾文件大小
+			ProblemData.strDescription += _T(" (");
+			ProblemData.strDescription += GetSizeString(llSize);
+			ProblemData.strDescription += _T(")");
+			LOG(INFO) << _T("扫描目录 ") << ProblemData.strPath.GetString()
+				<< _T(" 有残留文件大小 ") << llSize << " Byte.";
+
+			bRet = TRUE;
+			break;
+		}
+	case EXT_OPT_REG64:
+	case EXT_OPT_REG32:
+		{
+			DWORD dwError = 0;
+			PBYTE pData = nullptr;
+
+			dwError = SearchRegistry(ProblemData, pData);
+
+			if (0 != dwError)
+			{
+				// 没有找到指定的注册表或内容不匹配
+				LOG(INFO) << _T("Registry key not found, ")
+					<< ProblemData.strPath << _T(", key = ")
+					<< ProblemData.strKey;
+				if (nullptr != pData)
+				{
+					delete[] pData;
+					pData = nullptr;
+				}
+				break;
+			}
+			
+			if (nullptr != pData)
+			{
+				delete[] pData;
+				pData = nullptr;
+			}
+			bRet = TRUE;
+			break;
+		}
+	}
+
+	return bRet;
+}
+
+BOOL CExamination::SpeedUp(PROBLEMITEM & ProblemData)
+{
+	BOOL bRet = FALSE;
+
+	switch (ProblemData.nOperation)
+	{
+	case EXT_OPT_FILES:
+		{
+			break;
+		}
+	case EXT_OPT_REG64:
+	case EXT_OPT_REG32:
+		{
+			DWORD dwError = 0;
+
+			dwError = SearchRegistryEx(ProblemData);
+			if (0 != dwError)
+			{
+				// 没有找到指定的注册表或内容不匹配
+				LOG(INFO) << _T("Registry key not found, ")
+					<< ProblemData.strPath << _T(", key = ")
+					<< ProblemData.strKey;
+				break;
+			}
+
+			bRet = TRUE;
+			break;
+		}
+	}
+
+	return bRet;
+}
+
+DWORD CExamination::SearchDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG& dwFileSize)
 {
 	DWORD dwError = 0;
 	TCHAR szFindPath[MAX_PATH] = { 0 };
@@ -202,8 +274,6 @@ DWORD CExamination::ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG&
 
 	_tcscpy_s(szFindPath, szDirectory);
 	PathAppend(szFindPath, _T("*.*"));
-
-	// LOG(INFO) << _T("Start Scan Directory ") << szFindPath;
 
 	hFind = FindFirstFile(szFindPath, &ffd);
 	if (INVALID_HANDLE_VALUE == hFind)
@@ -228,7 +298,7 @@ DWORD CExamination::ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG&
 
 			if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 			{
-				dwError = ScanDirectory(szFindPath, szType, dwFileSize);
+				dwError = SearchDirectory(szFindPath, szType, dwFileSize);
 			}
 			else
 			{
@@ -259,15 +329,324 @@ DWORD CExamination::ScanDirectory(LPCTSTR szDirectory, LPCTSTR szType, LONGLONG&
 	return dwError;
 }
 
+DWORD CExamination::SearchRegistry(const PROBLEMITEM& ProblemData, __out LPBYTE& pData)
+{
+	DWORD	dwError = 0;
+	HKEY	hKey = nullptr;
+	HKEY	hPrimaryKey = nullptr;
+	LONG	lRet = 0;
+	DWORD	cbData = 0;
+	PBYTE	pszBuffer = nullptr;
+
+	do
+	{
+		// 找到第一个斜杠
+		int nFind = ProblemData.strPath.Find(_T('\\'));
+		if (0 == nFind)
+		{
+			dwError = ERROR_INVALID_KEY;
+			break;
+		}
+
+		// 得到主键位置
+		CDuiString strPrimaryKey = ProblemData.strPath.Mid(0, nFind);
+		if (strPrimaryKey == _T("HKEY_LOCAL_MACHINE"))
+		{
+			hPrimaryKey = HKEY_LOCAL_MACHINE;
+		}
+		else if (strPrimaryKey == _T("HKEY_CURRENT_USER"))
+		{
+			hPrimaryKey = HKEY_CURRENT_USER;
+		}
+		else if (strPrimaryKey == _T("HKEY_CLASSES_ROOT"))
+		{
+			hPrimaryKey = HKEY_CLASSES_ROOT;
+		}
+		else if (strPrimaryKey == _T("HKEY_USERS"))
+		{
+			hPrimaryKey = HKEY_USERS;
+		}
+		else
+		{
+			dwError = ERROR_INVALID_KEY;
+			LOG(ERROR) << _T("Invalid primary key: ") << strPrimaryKey;
+			break;
+		}
+
+		// 得到子键位置
+		CDuiString strSubKey = ProblemData.strPath.Mid(nFind + 1,
+			ProblemData.strPath.GetLength());
+
+		lRet = RegOpenKeyEx(hPrimaryKey, strSubKey.GetData(), 0,
+			KEY_QUERY_VALUE |
+			(ProblemData.nOperation == EXT_OPT_REG32 ? KEY_WOW64_32KEY : KEY_WOW64_64KEY),
+			&hKey);
+		if (ERROR_SUCCESS != lRet)
+		{
+			dwError = lRet;
+			LOG(ERROR) << _T("Failed to open key ") << strPrimaryKey.GetData()
+				<< _T("\\") << strSubKey.GetData() << _T(", error code = ")
+				<< lRet;
+			break;
+		}
+
+		lRet = RegQueryValueEx(hKey,
+			ProblemData.strKey.GetString(),
+			NULL,
+			NULL,
+			reinterpret_cast<LPBYTE>(pszBuffer),
+			&cbData);
+		if (ERROR_SUCCESS != lRet)
+		{
+			dwError = lRet;
+			LOG(ERROR) << _T("Failed to query key ") << strPrimaryKey.GetData()
+				<< _T("\\") << strSubKey.GetData() << _T(" -> ")
+				<< ProblemData.strKey.GetString() << _T(", error code = ")
+				<< lRet;
+			break;
+		}
+
+		pszBuffer = new BYTE[cbData];
+		pData = new BYTE[cbData];
+
+		lRet = RegQueryValueEx(hKey,
+			ProblemData.strKey.GetString(),
+			NULL,
+			NULL,
+			reinterpret_cast<LPBYTE>(pszBuffer),
+			&cbData);
+		if (ERROR_SUCCESS != lRet)
+		{
+			dwError = lRet;
+			LOG(ERROR) << _T("Failed to query key ") << strPrimaryKey.GetData()
+				<< _T("\\") << strSubKey.GetData() << _T(" -> ")
+				<< ProblemData.strKey.GetString() << _T(", error code = ")
+				<< lRet;
+			break;
+		}
+
+		// 将查询到的值传出
+		CopyMemory(pData, pszBuffer, cbData);
+
+		// 如果是字符串类型
+		if (ProblemData.nKeyType == EXT_KEYTYPE_STRING)
+		{
+			if (_tcsicmp(reinterpret_cast<TCHAR*>(pszBuffer), ProblemData.strValue.GetString()) == 0)
+			{
+				LOG(INFO) << _T("");
+				RegCloseKey(hKey);
+				break;
+			}
+			else
+			{
+				RegCloseKey(hKey);
+				dwError = ERROR_VALUE_ARE_NOT_EQUAL;
+				LOG(ERROR) << pszBuffer << _T(" is not equal to ")
+					<< ProblemData.strValue.GetString();
+				break;
+			}
+		}
+
+		// 如果是 DWORD 类型
+		if (ProblemData.nKeyType == EXT_KEYTYPE_DWORD)
+		{
+			DWORD nTmpValue = *(reinterpret_cast<DWORD*>(pszBuffer));
+			DWORD nValue = _ttoi(ProblemData.strValue.GetString());
+
+			// 如果找到直接跳出
+			if (nTmpValue == nValue)
+			{
+				LOG(INFO) << _T("Found value ") << nTmpValue << _T("==") << nValue;
+				RegCloseKey(hKey);
+				break;
+			}
+			else
+			{
+				RegCloseKey(hKey);
+				dwError = ERROR_VALUE_ARE_NOT_EQUAL;
+				LOG(ERROR) << nTmpValue << _T(" is not equal to ") << nValue;
+				break;
+			}
+		}
+
+		RegCloseKey(hKey);
+
+	} while (FALSE);
+
+	if (nullptr != pszBuffer)
+	{
+		delete[] pszBuffer;
+	}
+
+	return dwError;
+}
+
+DWORD CExamination::SearchRegistryEx(const PROBLEMITEM& ProblemData)
+{
+	DWORD	dwError = 0;
+	BOOL	bRet = FALSE;
+	PBYTE	pData = nullptr;
+
+	dwError = SearchRegistry(ProblemData, pData);
+
+	do 
+	{
+		// 返回值不存在的时候要当作需要加速处理
+		if (ERROR_FILE_NOT_FOUND == dwError)
+		{
+			dwError = 0;
+			break;
+		}
+
+		// 值存在的情况下要与默认值进行比对
+		if (ProblemData.nKeyType == EXT_KEYTYPE_STRING)
+		{
+			// 对比字符串，如果符合条件则不需要优化，不符合则显示在界面上
+			bRet = CompareString(pData, 
+				ProblemData.strValue.GetString(),
+				ProblemData.nComparison, 
+				ProblemData.nCompareType);
+			dwError = static_cast<DWORD>(bRet);
+			break;
+		}
+		
+		if (ProblemData.nKeyType == EXT_KEYTYPE_DWORD)
+		{
+			// 对比 DWORD 值，如果符合条件则不需要优化，不符合则显示在界面上
+			bRet = CompareDWORD(pData,
+				ProblemData.strValue.GetString(),
+				ProblemData.nComparison,
+				ProblemData.nCompareType);
+			dwError = static_cast<DWORD>(bRet);
+			break;
+		}
+	} while (FALSE);
+
+	if (nullptr != pData)
+	{
+		delete[] pData;
+		pData = nullptr;
+	}
+
+	return dwError;
+}
+
+BOOL CExamination::CompareString(const PBYTE pData, CDuiString strDefaultValue, int nComparison, int nCompareType)
+{
+	BOOL bRet = FALSE;
+
+	// 从注册表取出的数据有可能是字符串格式的，所以要转换成数值类型再比对
+	// 数据库中 CompareType 代表了要以什么方式对比
+	// 如果对比方式是以字符串方式对比，那么直接 strcmp，返回相等则是需要清理的
+	if (nCompareType == EXT_KEYTYPE_STRING)
+	{
+		if (_tcsicmp(reinterpret_cast<TCHAR*>(pData), strDefaultValue.GetData()) == 0)
+		{
+			bRet = TRUE;
+		}
+	}
+	
+	// 如果对比方式是以DWORD数值类型对比，那么强转数据再对比，根据数据库配置对比大小
+	if (nCompareType == EXT_KEYTYPE_DWORD)
+	{
+		TCHAR*	pszData = reinterpret_cast<TCHAR*>(pData);
+		DWORD	dwData = _ttoi(pszData);
+		DWORD	dwDefaultValue = _ttoi(strDefaultValue.GetData());
+
+		switch (nComparison)
+		{
+		case EXT_COMPT_LT:
+			if (dwData < dwDefaultValue)
+			{
+				bRet = TRUE;
+			}
+			break;
+		case EXT_COMPT_LTE:
+			if (dwData <= dwDefaultValue)
+			{
+				bRet = TRUE;
+			}
+			break;
+		case EXT_COMPT_EQUAL:
+			if (dwData == dwDefaultValue)
+			{
+				bRet = TRUE;
+			}
+			break;
+		case EXT_COMPT_GTE:
+			if (dwData >= dwDefaultValue)
+			{
+				bRet = TRUE;
+			}
+			break;
+		case EXT_COMPT_GT:
+			if (dwData > dwDefaultValue)
+			{
+				bRet = TRUE;
+			}
+			break;
+		}
+	}
+
+	return bRet;
+}
+
+BOOL CExamination::CompareDWORD(const PBYTE pData, CDuiString strDefaultValue, int nComparison, int nCompareType)
+{
+	BOOL bRet = FALSE;
+
+	DWORD dwData = *(reinterpret_cast<DWORD*>(pData));
+	DWORD dwDefaultValue = _ttoi(strDefaultValue.GetData());
+
+	switch (nComparison)
+	{
+	case EXT_COMPT_LT:
+		if (dwData < dwDefaultValue)
+		{
+			bRet = TRUE;
+		}
+		break;
+	case EXT_COMPT_LTE:
+		if (dwData <= dwDefaultValue)
+		{
+			bRet = TRUE;
+		}
+		break;
+	case EXT_COMPT_EQUAL:
+		if (dwData == dwDefaultValue)
+		{
+			bRet = TRUE;
+		}
+		break;
+	case EXT_COMPT_GTE:
+		if (dwData >= dwDefaultValue)
+		{
+			bRet = TRUE;
+		}
+		break;
+	case EXT_COMPT_GT:
+		if (dwData > dwDefaultValue)
+		{
+			bRet = TRUE;
+		}
+		break;
+	}
+
+	return bRet;
+}
+
 DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 {
 	DWORD		dwError = 0;
 	HKEY		hKey = nullptr;
 	HKEY		hPrimaryKey = nullptr;
 	LONG		lRet = 0;
+	DWORD		cbData = 0;
+	PBYTE		pszBuffer = nullptr;
 
 	do 
 	{
+		// 找到第一个斜杠
 		int nFind = refProblemData.strPath.Find(_T('\\'));
 		if (0 == nFind)
 		{
@@ -317,12 +696,8 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 			break;
 		}
 
-		// 查询值
-		DWORD cbData = 0;
-		PBYTE pszBuffer = nullptr;
-
 		lRet = RegQueryValueEx(hKey, 
-			refProblemData.strKey.GetData(), 
+			refProblemData.strKey.GetString(), 
 			NULL, 
 			NULL, 
 			reinterpret_cast<LPBYTE>(pszBuffer),
@@ -332,14 +707,14 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 			dwError = lRet;
 			LOG(ERROR) << _T("Failed to query key ") << strPrimaryKey.GetData()
 				<< _T("\\") << strSubKey.GetData() << _T(" -> ") 
-				<< refProblemData.strKey.GetData() << _T(", error code = ")
+				<< refProblemData.strKey.GetString() << _T(", error code = ")
 				<< lRet;
 			break;
 		}
 
 		pszBuffer = new BYTE[cbData];
 		lRet = RegQueryValueEx(hKey,
-			refProblemData.strKey.GetData(),
+			refProblemData.strKey.GetString(),
 			NULL,
 			NULL,
 			reinterpret_cast<LPBYTE>(pszBuffer),
@@ -349,15 +724,15 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 			dwError = lRet;
 			LOG(ERROR) << _T("Failed to query key ") << strPrimaryKey.GetData()
 				<< _T("\\") << strSubKey.GetData() << _T(" -> ")
-				<< refProblemData.strKey.GetData() << _T(", error code = ")
+				<< refProblemData.strKey.GetString() << _T(", error code = ")
 				<< lRet;
 			break;
 		}
 
 		// 如果是字符串类型
-		if (refProblemData.strKeyType == EXT_KEYTYPE_STRING)
+		if (refProblemData.nKeyType == EXT_KEYTYPE_STRING)
 		{
-			if (_tcsicmp(reinterpret_cast<TCHAR*>(pszBuffer), refProblemData.strValue.GetData()) == 0)
+			if (_tcsicmp(reinterpret_cast<TCHAR*>(pszBuffer), refProblemData.strValue.GetString()) == 0)
 			{
 				LOG(INFO) << _T("");
 				break;
@@ -367,7 +742,7 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 				RegCloseKey(hKey);
 				dwError = -1;
 				LOG(ERROR) << pszBuffer << _T(" is not equal to ")
-					<< refProblemData.strValue.GetData();
+					<< refProblemData.strValue.GetString();
 				if (nullptr != pszBuffer)
 				{
 					delete[] pszBuffer;
@@ -375,43 +750,45 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 				break;
 			}
 		}
+
 		// 如果是 DWORD 类型
-		if (refProblemData.strKeyType == EXT_KEYTYPE_DWORD)
+		if (refProblemData.nKeyType == EXT_KEYTYPE_DWORD)
 		{
 			DWORD nTmpValue = *(reinterpret_cast<DWORD*>(pszBuffer));
-			DWORD nValue = _ttoi(refProblemData.strValue.GetData());
+			DWORD nValue = _ttoi(refProblemData.strValue.GetString());
 
 			if (refProblemData.nComparison == EXT_COMPT_LT)
 			{
-				if (nTmpValue >= nValue)
+				// 小于条件，如果实际值大于等于参考值，那么条件不符
+				if (nTmpValue < nValue)
 				{
 					dwError = -1;
 				}
 			}
 			if (refProblemData.nComparison == EXT_COMPT_LTE)
 			{
-				if (nTmpValue > nValue)
+				if (nTmpValue <= nValue)
 				{
 					dwError = -1;
 				}
 			}
 			if (refProblemData.nComparison == EXT_COMPT_EQUAL)
 			{
-				if (nTmpValue != nValue)
+				if (nTmpValue == nValue)
 				{
 					dwError = -1;
 				}
 			}
 			if (refProblemData.nComparison == EXT_COMPT_GTE)
 			{
-				if (nTmpValue < nValue)
+				if (nTmpValue >= nValue)
 				{
 					dwError = -1;
 				}
 			}
 			if (refProblemData.nComparison == EXT_COMPT_GT)
 			{
-				if (nTmpValue <= nValue)
+				if (nTmpValue > nValue)
 				{
 					dwError = -1;
 				}
@@ -428,6 +805,11 @@ DWORD CExamination::ScanRegistry(const PROBLEMITEM& refProblemData)
 	} while (FALSE);
 
 	return dwError;
+}
+
+DWORD CExamination::ScanRegistryEx(const PROBLEMITEM& refProblemData)
+{
+	return 0;
 }
 
 CDuiString CExamination::GetSizeString(LONGLONG llSize)

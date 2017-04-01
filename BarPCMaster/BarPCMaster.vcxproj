@@ -107,11 +107,12 @@
     <None Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\CppSQLite3U.h" />
+    <ClInclude Include="..\Common\DBDataMgr.h" />
     <ClInclude Include="..\Common\easylogging++.h" />
+    <ClInclude Include="..\Common\GlobalDefine.h" />
     <ClInclude Include="BarPCMaster.h" />
     <ClInclude Include="ControlNames.h" />
-    <ClInclude Include="CppSQLite3U.h" />
-    <ClInclude Include="DBDataMgr.h" />
     <ClInclude Include="Examination.h" />
     <ClInclude Include="MainFrameWnd.h" />
     <ClInclude Include="UIProblemList.h" />
@@ -120,10 +121,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\CppSQLite3U.cpp" />
+    <ClCompile Include="..\Common\DBDataMgr.cpp" />
     <ClCompile Include="..\Common\easylogging++.cc" />
     <ClCompile Include="BarPCMaster.cpp" />
-    <ClCompile Include="CppSQLite3U.cpp" />
-    <ClCompile Include="DBDataMgr.cpp" />
     <ClCompile Include="Examination.cpp" />
     <ClCompile Include="MainFrameWnd.cpp" />
     <ClCompile Include="UIProblemList.cpp" />

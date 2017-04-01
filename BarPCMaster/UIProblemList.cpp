@@ -191,7 +191,7 @@ bool CProblemListUI::AddItem(LPCTSTR szGroupName, PPROBLEMITEM pstExaminaion, bo
 	CLabelUI* pProblemText = static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement, bpcProblemItemLabel));
 	if (nullptr != pProblemText)
 	{
-		pProblemText->SetText(pstExaminaion->strDescription.GetData());
+		pProblemText->SetText(pstExaminaion->strDescription.GetString());
 	}
 
 	// 根据传递进来的组名称搜索组控件对象
